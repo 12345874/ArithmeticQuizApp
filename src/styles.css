@@ -1,0 +1,52 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.app-header {
+  font-size: 2rem;
+  color: #e20074;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.quiz-cont {
+  display: flex;
+}
+
+.quiz1-cont {
+  width: 50%;
+  background-color: aliceblue;
+  padding: 0.5rem;
+  height: calc(100vh - 10rem);
+  margin-right: 0.5rem;
+}
+
+.quiz2-cont {
+  width: 50%;
+  background-color: aliceblue;
+  padding: 0.5rem;
+  height: calc(100vh - 10rem);
+}
+
+.btn {
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  top: 35%;
+}
+.btn:hover {
+  background-color: #e20074;
+  color: white;
+}
+
+.hide {
+  display: none;
+}
+
+.quiz-title {
+  font-size: 1rem;
+  color: #e20074;
+  text-decoration: underline;
+}

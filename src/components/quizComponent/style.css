@@ -1,0 +1,43 @@
+.quiz-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  height: calc(100vh - 10rem);
+}
+
+.box {
+  background-color: rgba(255, 255, 0, 0.411);
+  padding: 0.5rem 1rem;
+}
+.add-margin {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.input-field {
+  width: 15%;
+  padding: 0.5rem;
+  border: none;
+  background-color: rgba(255, 255, 0, 0.411);
+}
+.input-field:focus {
+  outline: none;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.padding {
+  padding: 0.5rem 1rem;
+}
+.bg-color {
+  background-color: #e20074;
+  margin-bottom: 0.5rem;
+}
+.top-margin {
+  margin: 1rem 0;
+}
