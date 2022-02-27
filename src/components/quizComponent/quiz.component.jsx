@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { quizData } from "../../quizData";
 import { handleAnswers } from "../../utils";
 import "./style.css";
 
@@ -80,9 +79,12 @@ function QuizComponent({
         index: [currentIndex]
       }
     ]);
-    setAllResult([...allResult, { userAns: inputData, index: [currentIndex] }]);
+    setAllResult([
+      ...allResult,
+      { userAns: inputData.length ? inputData : "N/A", index: [currentIndex] }
+    ]);
     setInputData("");
-    if (currentIndex === 5) {
+    if (currentIndex === 20) {
       setSubmit(true);
     }
   };
@@ -129,7 +131,9 @@ function QuizComponent({
                 value={inputData}
               />
             </div>
-            <div className="top-margin">Total Correct Answers:{count}</div>
+            <div className="top-margin">
+              Total Correct Answers:{count}/{allAnswers?.length}
+            </div>
           </>
         ) : (
           <>
@@ -142,12 +146,18 @@ function QuizComponent({
                 </div>
               );
             })}
-            <div>Total Correct Answers:{count}</div>
+            <div>
+              Total Correct Answers:{count}/{allQuestions?.length}
+            </div>
           </>
         )}
         {!submit && (
-          <button style={{ cursor: "pointer" }} onClick={handleNext}>
-            {currentIndex === 5 ? "Submit" : "Next"}
+          <button
+            style={{ cursor: "pointer" }}
+            className={`${currentIndex < 20 && "btn"}`}
+            onClick={handleNext}
+          >
+            {currentIndex === 20 ? "Submit" : "Next"}
           </button>
         )}
       </div>
