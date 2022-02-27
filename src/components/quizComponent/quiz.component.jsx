@@ -110,16 +110,15 @@ function QuizComponent({
    */
 
   const handleResult = () => {
-    const res = allAnswers.map((el1) => ({
+    const res = allAnswers.map((el1, i) => ({
       index: el1.index,
       operator: el1.operator,
       num1: el1.num1,
       num2: el1.num2,
-      match: allResult.some((el2) =>
-        parseInt(el2.userAns) === ""
+      match:
+        parseInt(allResult[i]?.userAns) === ""
           ? false
-          : parseInt(el2.userAns) === el1.originalAns
-      )
+          : parseInt(allResult[i]?.userAns) === el1.originalAns && true
     }));
     setAllQuestions(res);
     const matchData = res.filter((item) => item.match === true);
