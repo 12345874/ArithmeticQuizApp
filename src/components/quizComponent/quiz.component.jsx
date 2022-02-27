@@ -46,7 +46,9 @@ function QuizComponent({
    */
   useEffect(() => {
     setNumber1(generateNumber(0, 9));
-    setNumber2(generateNumber(0, 9));
+    operator === "/"
+      ? setNumber2(generateNumber(1, 9))
+      : setNumber2(generateNumber(0, 9));
     generateOperator(["+", "-", "*", "/"]);
     setSubmit(false);
     setCurrentIndex(1);
@@ -61,18 +63,29 @@ function QuizComponent({
   };
 
   /**
-   * function runs on click of next button
+   * round the decimal number upto two places
+   * @param {*} num
+   */
+
+  function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
+  }
+
+  /**
+   * function runs on click of next button handles user input and pre-answer value
    */
 
   const handleNext = () => {
     setCurrentIndex((prevState) => prevState + 1);
     setNumber1(generateNumber(0, 9));
-    setNumber2(generateNumber(0, 9));
+    operator === "/"
+      ? setNumber2(generateNumber(1, 9))
+      : setNumber2(generateNumber(0, 9));
     generateOperator(["+", "-", "*", "/"]);
     setAllAnswers([
       ...allAnswers,
       {
-        originalAns: handleAnswers(operator, number1, number2),
+        originalAns: roundToTwo(handleAnswers(operator, number1, number2)),
         operator: operator,
         num1: number1,
         num2: number2,
@@ -81,7 +94,10 @@ function QuizComponent({
     ]);
     setAllResult([
       ...allResult,
-      { userAns: inputData.length ? inputData : "N/A", index: [currentIndex] }
+      {
+        userAns: inputData.length ? roundToTwo(parseInt(inputData)) : "",
+        index: [currentIndex]
+      }
     ]);
     setInputData("");
     if (currentIndex === 20) {
@@ -90,7 +106,7 @@ function QuizComponent({
   };
 
   /**
-   * used to display the final  result
+   * used to display the final  result , compares the two array of objects and return a new array of objects with correct and incorrect values..
    */
 
   const handleResult = () => {
@@ -99,7 +115,11 @@ function QuizComponent({
       operator: el1.operator,
       num1: el1.num1,
       num2: el1.num2,
-      match: allResult.some((el2) => parseInt(el2.userAns) === el1.originalAns)
+      match: allResult.some((el2) =>
+        parseInt(el2.userAns) === ""
+          ? false
+          : parseInt(el2.userAns) === el1.originalAns
+      )
     }));
     setAllQuestions(res);
     const matchData = res.filter((item) => item.match === true);
@@ -117,6 +137,7 @@ function QuizComponent({
   return (
     <>
       <div className="quizContainer">
+        <div>Note: Please enter value only till to decimal places.</div>
         {!submit ? (
           <>
             <div className="quiz-cont">
@@ -137,9 +158,12 @@ function QuizComponent({
           </>
         ) : (
           <>
-            {allQuestions?.map((item) => {
+            {allQuestions?.map((item, index) => {
               return (
-                <div className={`flex ${!item.match && "bg-color"}`}>
+                <div
+                  key={index}
+                  className={`flex ${!item.match && "bg-color"}`}
+                >
                   <div className="padding">{item.num1}</div>
                   <div>{item?.operator}</div>
                   <div className="padding">{item.num2}&nbsp;?</div>
